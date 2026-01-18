@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Meter Registry</string>
+    <string name="btn_save">Save measurement</string>
+    <string name="label_valor">Measurement</string>
+    <string name="label_tipo">Meter</string>
+    <string name="label_fecha">Date</string>
+    <string name="msg_exito">Record saved successfully</string>
+</resources>
