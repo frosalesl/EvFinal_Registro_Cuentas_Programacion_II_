@@ -20,6 +20,10 @@ interface MedicionDao {
 
     @Insert
     suspend fun insert(medicion: Medicion)
+
+    // NUEVA FUNCIÓN: Permite borrar un registro de la tabla
+    @Delete
+    suspend fun delete(medicion: Medicion)
 }
 
 // 3. Base de Datos: Punto de acceso principal

@@ -14,21 +14,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 1. Database initialization
+        // Inicialización de Base de Datos Room
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
             "medidores_db"
         ).build()
 
-        // 2. ViewModel initialization
+        // Inicialización del ViewModel con el DAO correspondiente
         val viewModel = MedicionViewModel(db.medicionDao())
 
         setContent {
-            // 3. Navigation controller
             val navController = rememberNavController()
 
-            // 4. NavHost linking Listado.kt and Formulario.kt
+            // Control de navegación entre pantallas
             NavHost(navController = navController, startDestination = "listado") {
                 composable("listado") {
                     ListadoScreen(navController, viewModel)

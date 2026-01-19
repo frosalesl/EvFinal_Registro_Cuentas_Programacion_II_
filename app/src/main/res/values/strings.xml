@@ -1,8 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Registro de Medidores</string>
-    <string name="btn_save">Registrar medición</string>
-    <string name="label_valor">Medición</string>
-    <string name="label_tipo">Medidor</string>
+    <string name="titulo_registro">Registro Medidor</string>
+    <string name="label_tipo">Medidor de:</string>
+    <string name="label_valor">Medidor</string>
     <string name="label_fecha">Fecha</string>
+    <string name="placeholder_medidor">Min. tres (3) caracteres, solo números.</string>
+    <string name="btn_save">Registrar medición</string>
+    <string name="btn_cancel">Volver al listado</string>
     <string name="msg_exito">Registro guardado satisfactoriamente</string>
+    <string name="sin_datos">No existen mediciones registradas</string>
+    <string name="tipo_agua">Agua</string>
+    <string name="tipo_luz">Luz</string>
+    <string name="tipo_gas">Gas</string>
+    <string name="dialog_titulo">Confirmar eliminación</string>
+    <string name="dialog_mensaje">¿Estás seguro de que quieres eliminar este registro?</string>
+    <string name="btn_si">Sí</string>
+    <string name="btn_no">No</string>
 </resources>
