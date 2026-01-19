@@ -24,12 +24,13 @@ import java.util.Locale
 
 @Composable
 fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel) {
+    // Definición de los estados reactivos con el fin de capturar la entrada del usuario
     var valor by remember { mutableStateOf("") }
 
-    // 1. Guardamos el ID del recurso seleccionado (por defecto Agua)
+    // Estado para almacenar el ID del recurso de texto seleccionado (Manejo de bilingüismo)
     var tipoSeleccionadoRes by remember { mutableIntStateOf(R.string.tipo_agua) }
 
-    // 2. Definimos las opciones usando los IDs de los strings traducibles
+    // Lista de recursos de strings para las opciones del RadioButton
     val opciones = listOf(
         R.string.tipo_agua,
         R.string.tipo_luz,
@@ -37,12 +38,14 @@ fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel)
     )
 
     val context = LocalContext.current
+    // Obtención y formateo de la fecha actual del sistema para lograr el registro
     val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
     Column(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Título de la pantalla
         Text(
             text = stringResource(id = R.string.titulo_registro),
             style = MaterialTheme.typography.headlineLarge,
@@ -50,6 +53,7 @@ fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel)
             modifier = Modifier.padding(vertical = 32.dp)
         )
 
+        // Contenedor del formulario
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,6 +61,8 @@ fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel)
                 .padding(16.dp)
         ) {
             Text(stringResource(id = R.string.label_valor), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+
+            // Campo de texto con validación que solo permite caracteres numéricos
             TextField(
                 value = valor,
                 onValueChange = { if (it.all { char -> char.isDigit() }) valor = it },
@@ -70,15 +76,18 @@ fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel)
                 singleLine = true
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+
+            // Visualización de la fecha
             Text(stringResource(id = R.string.label_fecha), style = MaterialTheme.typography.labelSmall, color = Color.Gray)
             Text(text = fechaHoy, modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp))
         }
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Sección de selección de tipo de medidor
         Text(stringResource(id = R.string.label_tipo), modifier = Modifier.fillMaxWidth(), style = MaterialTheme.typography.titleMedium)
 
-        // 3. Renderizamos las opciones traduciéndolas al vuelo
+        // Iteración sobre la lista de opciones para generar dinámicamente los RadioButtons
         opciones.forEach { opcionResId ->
             Row(
                 Modifier.fillMaxWidth().selectable(
@@ -92,7 +101,7 @@ fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel)
                     onClick = { tipoSeleccionadoRes = opcionResId },
                     colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF6750A4))
                 )
-                // Aquí usamos stringResource para que cambie según el sistema
+                // Uso de stringResource de soporte multiidioma en la interfaz
                 Text(
                     text = stringResource(id = opcionResId),
                     modifier = Modifier.padding(start = 8.dp)
@@ -102,23 +111,24 @@ fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel)
 
         Spacer(modifier = Modifier.weight(1f))
 
+        // Botón de acción para persistir los datos (validación de longitud mínima)
         Button(
             modifier = Modifier.fillMaxWidth(0.7f).height(50.dp),
             shape = RoundedCornerShape(25.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4)),
             enabled = valor.length >= 3,
             onClick = {
-                // 4. Mapeamos el ID de vuelta a un valor constante para la BD ("Agua", "Luz", "Gas")
-                // Esto es importante para que el Listado sepa qué icono poner después
+                // Normalización del tipo de dato para almacenamiento consistente en la Base de Datos
                 val tipoParaDB = when (tipoSeleccionadoRes) {
                     R.string.tipo_agua -> "Agua"
                     R.string.tipo_luz -> "Luz"
                     else -> "Gas"
                 }
 
+                // Llamada al ViewModel (corrutinas)
                 viewModel.guardarMedicion(tipoParaDB, valor, fechaHoy)
                 Toast.makeText(context, context.getString(R.string.msg_exito), Toast.LENGTH_SHORT).show()
-                navController.popBackStack()
+                navController.popBackStack() // Retorno a la pantalla anterior tras guardar
             }
         ) {
             Text(stringResource(id = R.string.btn_save), color = Color.White)
@@ -126,6 +136,7 @@ fun FormularioScreen(navController: NavController, viewModel: MedicionViewModel)
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Botón para cancelar la operación y regresar al listado
         TextButton(onClick = { navController.popBackStack() }) {
             Text(stringResource(id = R.string.btn_cancel), color = Color(0xFF6750A4))
         }

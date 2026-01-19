@@ -6,14 +6,13 @@ import kotlinx.coroutines.launch
 
 class MedicionViewModel(private val dao: MedicionDao) : ViewModel() {
 
-    // 1. Observador de la lista: Se actualiza automáticamente al insertar o borrar
-    // Requiere la dependencia: androidx.lifecycle:lifecycle-livedata-ktx
+    // Aquí se actualiza automáticamente al insertar o borrar.
     val listaMediciones: LiveData<List<Medicion>> = dao.getAll().asLiveData()
 
-    // 2. Función para insertar registros
+    // Esta es la función para insertar registros
     fun guardarMedicion(tipo: String, valor: String, fecha: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            // Manejamos el valor como Double para la base de datos
+            // Se maneja el valor como Double para la base de datos
             val valorNumerico = valor.toDoubleOrNull() ?: 0.0
             val nuevaMedicion = Medicion(
                 tipo = tipo,
@@ -24,7 +23,7 @@ class MedicionViewModel(private val dao: MedicionDao) : ViewModel() {
         }
     }
 
-    // 3. Función para borrar registros (conectada al basurero azul)
+    // Esta es la función para borrar registros (conectada al basurero azul)
     fun borrarMedicion(medicion: Medicion) {
         viewModelScope.launch(Dispatchers.IO) {
             dao.delete(medicion)

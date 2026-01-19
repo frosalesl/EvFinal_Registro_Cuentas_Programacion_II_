@@ -10,28 +10,37 @@ import androidx.navigation.compose.rememberNavController
 import com.example.evfinal_cuentas_programacion_ii.Medicion.AppDatabase
 import com.example.evfinal_cuentas_programacion_ii.Medicion.MedicionViewModel
 
+// Entrada principal de la aplicación
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inicialización de Base de Datos Room
+        // Inicialización de la Base de Datos ROOM
+        // Se utiliza el patrón Builder para construir la instancia de la base de datos SQLite
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
             "medidores_db"
         ).build()
 
-        // Inicialización del ViewModel con el DAO correspondiente
+        // Instanciación del ViewModel
+        // Se le inyecta el DAO para permitir la comunicación entre la UI y la capa de datos
         val viewModel = MedicionViewModel(db.medicionDao())
 
         setContent {
+            // Inicialización del controlador de navegación de Jetpack Compose
             val navController = rememberNavController()
 
-            // Control de navegación entre pantallas
+            // Configuración del Grafo de Navegación (NavHost)
+            // Define las rutas y vincula los componibles con el ViewModel
             NavHost(navController = navController, startDestination = "listado") {
+
+                // Definición de la ruta para la pantalla de historial
                 composable("listado") {
                     ListadoScreen(navController, viewModel)
                 }
+
+                // Definición de la ruta para la pantalla de ingreso de datos
                 composable("formulario") {
                     FormularioScreen(navController, viewModel)
                 }

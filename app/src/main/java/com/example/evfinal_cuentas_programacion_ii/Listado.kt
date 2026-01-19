@@ -24,14 +24,15 @@ import com.example.evfinal_cuentas_programacion_ii.Medicion.MedicionViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
-    // Observar la lista de registros desde el ViewModel
+    // Observación reactiva de la base de datos a través de LiveData
     val registros by viewModel.listaMediciones.observeAsState(emptyList())
 
-    // Estados para controlar el Modal de confirmación
+    // Estados locales para la gestión del diálogo de confirmación de borrado
     var mostrarDialogo by remember { mutableStateOf(false) }
     var registroSeleccionado by remember { mutableStateOf<Medicion?>(null) }
 
-    // --- DIÁLOGO DE CONFIRMACIÓN (MODAL) ---
+    // ADICIONAL, se agrega opción de eliminar registros.
+    // Implementa la validación de usuario antes de proceder con el borrado en ROOM
     if (mostrarDialogo && registroSeleccionado != null) {
         AlertDialog(
             onDismissRequest = { mostrarDialogo = false },
@@ -40,6 +41,7 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
             confirmButton = {
                 TextButton(
                     onClick = {
+                        // Llamada al ViewModel para eliminar registro mediante corrutinas
                         registroSeleccionado?.let { viewModel.borrarMedicion(it) }
                         mostrarDialogo = false
                     }
@@ -56,6 +58,7 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
     }
 
     Scaffold(
+        // Botón flotante para navegación hacia el formulario de ingreso
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate("formulario") },
@@ -67,6 +70,7 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding).fillMaxSize()) {
+            // Validación de estado donde si la lista está vacía, se muestra mensaje
             if (registros.isEmpty()) {
                 Text(
                     text = stringResource(id = R.string.sin_datos),
@@ -75,6 +79,7 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
                     color = Color.Gray
                 )
             } else {
+                // Implementación de lista dinámica eficiente
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(registros) { registro ->
                         Column {
@@ -84,7 +89,8 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
                                     .padding(vertical = 12.dp, horizontal = 16.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                // Lógica de iconos y traducción dinámica de tipos
+                                // Lógica de presentación con selección de ícono drawable según el tipo
+                                // Traducción para mantener bilingüismo
                                 val (iconRes, tipoTraducido) = when (registro.tipo) {
                                     "Agua" -> Pair(R.drawable.ic_agua, stringResource(id = R.string.tipo_agua))
                                     "Luz" -> Pair(R.drawable.ic_luz, stringResource(id = R.string.tipo_luz))
@@ -100,6 +106,7 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
 
                                 Spacer(modifier = Modifier.width(12.dp))
 
+                                // Renderizado de datos del registro para diseño ordenado
                                 Text(
                                     text = tipoTraducido.uppercase(),
                                     modifier = Modifier.weight(1f),
@@ -121,9 +128,10 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
                                     color = Color.Gray
                                 )
 
-                                // --- BASURERO AZUL ---
+                                // ELIMINACIÓN
                                 IconButton(
                                     onClick = {
+                                        // Se asigna el registro actual al estado para confirmación posterior
                                         registroSeleccionado = registro
                                         mostrarDialogo = true
                                     }
@@ -131,7 +139,7 @@ fun ListadoScreen(navController: NavController, viewModel: MedicionViewModel) {
                                     Icon(
                                         imageVector = Icons.Default.Delete,
                                         contentDescription = "Borrar",
-                                        tint = Color.Blue // Color solicitado
+                                        tint = Color.Blue // Basurero en azul extra al requerimiento
                                     )
                                 }
                             }
