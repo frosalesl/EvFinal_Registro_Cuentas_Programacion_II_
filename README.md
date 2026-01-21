@@ -1,4 +1,4 @@
-<img width="974" height="548" alt="image" src="https://github.com/user-attachments/assets/dde3c648-6d45-44f6-8322-8a5d850573bd" />Estimada profesora Carolina.
+Estimada profesora Carolina.
 
 Esperando que esté bien, dejo a usted elementos de comprobación del correcto funcionamiento de la aplicación.
 
