@@ -5,6 +5,7 @@ Esperando que esté bien, dejo a usted elementos de comprobación del correcto f
 Se despide afectuosamente.
 
 Felipe Rosales Lillo
+
 <br />
 Se configura el uso del emulador Memu para la actividad, donde se realiza la conexión correspondiente a Android Studio. Cabe destacar que Memú, por defecto, está en inglés.
 <br />
