@@ -35,7 +35,7 @@ De este modo, se retorna al listado de elementos guardados, donde se puede obser
 <br />
 Se repite el procedimiento agregando registros de luz y gas, donde se puede apreciar que, al retornar al listado, están ordenados de manera descendente acorde al ingreso.
 <br />
-<img width="706" height="1103" alt="image" src="https://github.com/user-attachments/assets/6a0077b7-d81a-4b05-aac5-b566bba635aa" />
+<img width="813" height="1264" alt="image" src="https://github.com/user-attachments/assets/95f75fba-46d8-4e69-a4ab-58c9bc90faed" />
 <br />
 Ahora, para probar el modal que permite consultar si se quiere eliminar un registro, se presiona el basurero del gas, donde solicita la confirmación. 
 <br />
