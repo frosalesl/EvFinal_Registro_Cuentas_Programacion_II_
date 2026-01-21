@@ -9,9 +9,9 @@ Felipe Rosales Lillo
 <br />
 Se configura el uso del emulador Memu para la actividad, donde se realiza la conexión correspondiente a Android Studio. Cabe destacar que Memú, por defecto, está en inglés.
 <br />
-<img width="974" height="548" alt="image" src="https://github.com/user-attachments/assets/1f7c9863-1419-474a-9bdd-4fb77ab013ed" />
-<br />
 <img width="974" height="547" alt="image" src="https://github.com/user-attachments/assets/8e97814f-8ecd-4973-8278-6002e765a103" />
+<br />
+<img width="974" height="548" alt="image" src="https://github.com/user-attachments/assets/1f7c9863-1419-474a-9bdd-4fb77ab013ed" />
 <br />
 Luego, se ejecuta la aplicación desde Android Studio, donde se puede observar la instalación de la aplicación con el nombre “Meter Registry”.<br />
 <br />
@@ -36,10 +36,6 @@ De este modo, se retorna al listado de elementos guardados, donde se puede obser
 Se repite el procedimiento agregando registros de luz y gas, donde se puede apreciar que, al retornar al listado, están ordenados de manera descendente acorde al ingreso.
 <br />
 <img width="706" height="1103" alt="image" src="https://github.com/user-attachments/assets/6a0077b7-d81a-4b05-aac5-b566bba635aa" />
-<br />
-Se repite el procedimiento agregando registros de luz y gas, donde se puede apreciar que, al retornar al listado, están ordenados de manera descendente acorde al ingreso.
-<br />
-<img width="813" height="1264" alt="image" src="https://github.com/user-attachments/assets/e7682753-3993-4d86-b5bc-dcbf9f1a293b" />
 <br />
 Ahora, para probar el modal que permite consultar si se quiere eliminar un registro, se presiona el basurero del gas, donde solicita la confirmación. 
 <br />
